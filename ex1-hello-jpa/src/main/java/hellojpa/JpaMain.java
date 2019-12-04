@@ -15,24 +15,20 @@ public class JpaMain {
 		tx.begin();
 
 		try {
-			Team team = new Team();
-			team.setName("TeamA");
-			em.persist(team);
-
 			Member member = new Member();
 			member.setUsername("memberA");
-			member.setTeam(team);
+
+			System.out.println("===============================");
 			em.persist(member);
+			System.out.println("===============================");
 
-			em.clear();
+			Team team = new Team();
+			team.setName("TeamA");
+			team.getMembers().add(member); // Update query
 
-			//			Member findMember = em.find(Member.class, 1L);
-			//			List<Member> members = findMember.getTeam().getMembers();
-			//			members.forEach(m -> System.out.println(m.getUsername()));
-
-			// OneToMany 는 Join 쿼리를 만들지 않고 있음. 쿼리 2번 날라감
-			Team findTeam = em.find(Team.class, 1L);
-			System.out.println(findTeam.getMembers().get(0).getUsername()); // 지연 로딩
+			System.out.println("===============================");
+			em.persist(team);
+			System.out.println("===============================");
 
 			tx.commit();
 		} catch (Exception e) {
