@@ -1,42 +1,28 @@
 package hellojpa;
 
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-@SequenceGenerator(name = "MEMBER_SEQ_GENERATOR", sequenceName = "MEMBER_SEQ", initialValue = 1, allocationSize = 50)
 public class Member {
 	@Id
-	//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "member_id")
 	private Long id;
 
-	@Column(name = "name")
 	private String username;
 
-	private Integer age;
+	//	@Column(name = "team_id")
+	//	private Long teamId;
 
-	@Enumerated(EnumType.STRING)
-	private RoleType roleType;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date lastModifiedDate;
-
-	@Lob
-	private String description;
+	@ManyToOne
+	@JoinColumn(name = "team_id")
+	private Team team;
 
 	public Long getId() {
 		return id;
@@ -54,44 +40,12 @@ public class Member {
 		this.username = username;
 	}
 
-	public Integer getAge() {
-		return age;
+	public Team getTeam() {
+		return team;
 	}
 
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-
-	public RoleType getRoleType() {
-		return roleType;
-	}
-
-	public void setRoleType(RoleType roleType) {
-		this.roleType = roleType;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getLastModifiedDate() {
-		return lastModifiedDate;
-	}
-
-	public void setLastModifiedDate(Date lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 
 }
