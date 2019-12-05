@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import jpabook.jpashop.domain.Book;
 
 public class AppMain {
 	public static void main(String[] args) {
@@ -14,8 +15,12 @@ public class AppMain {
 		tx.begin();
 
 		try {
+			Book book = new Book();
+			book.setName("Book");
+			book.setAuthor("Author");
+			book.setIsbn("1234");
 
-
+			em.persist(book);
 
 			tx.commit();
 		} catch (Exception e) {
