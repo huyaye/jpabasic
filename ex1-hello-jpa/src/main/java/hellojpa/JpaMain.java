@@ -1,6 +1,5 @@
 package hellojpa;
 
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -16,22 +15,23 @@ public class JpaMain {
 		tx.begin();
 
 		try {
-			Team team1 = new Team();
-			team1.setName("TeamA");
-			em.persist(team1);
+			Team team = new Team();
 
 			Member member1 = new Member();
 			member1.setUsername("m1");
-			member1.setTeam(team1);
-			em.persist(member1);
+
+			Member member2 = new Member();
+			member2.setUsername("m2");
+
+			team.addMember(member1);
+			team.addMember(member2);
+
+			em.persist(team);
 
 			em.clear();
 
-			// Member m1 = em.find(Member.class, member1.getId());
-			// System.out.println("username : " + m1.getUsername());
-			// System.out.println("teamname : " + m1.getTeam().getName());
-
-			List<Member> members = em.createQuery("SELECT m FROM Member m", Member.class).getResultList(); // EAGER 인 경우, SQL 쿼리 2번.
+			Team findTeam = em.find(Team.class, team.getId());
+			findTeam.getMembers().remove(0); // Select, Delete query
 
 			tx.commit();
 		} catch (Exception e) {

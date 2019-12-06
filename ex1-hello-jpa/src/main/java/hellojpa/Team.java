@@ -2,6 +2,7 @@ package hellojpa;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,8 +19,13 @@ public class Team {
 
 	private String name;
 
-	@OneToMany(mappedBy = "team")
+	@OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Member> members = new ArrayList<>();
+
+	public void addMember(Member member) {
+		members.add(member);
+		member.setTeam(this);
+	}
 
 	public Long getId() {
 		return id;
