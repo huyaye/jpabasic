@@ -2,6 +2,7 @@ package hellojpa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +18,8 @@ public class Member {
 
 	private String username;
 
-	@ManyToOne
-	@JoinColumn(name = "team_id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "team_id")
 	private Team team;
 
 	public Long getId() {
@@ -36,4 +37,13 @@ public class Member {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+
 }
