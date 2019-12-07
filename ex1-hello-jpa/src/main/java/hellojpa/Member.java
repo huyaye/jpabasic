@@ -1,6 +1,5 @@
 package hellojpa;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,14 +12,20 @@ import javax.persistence.ManyToOne;
 public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "member_id")
 	private Long id;
 
 	private String username;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	private int age;
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "team_id")
 	private Team team;
+
+	public void changeTeam(Team team) {
+		this.team = team;
+		team.getMembers().add(this);
+	}
 
 	public Long getId() {
 		return id;
@@ -42,8 +47,12 @@ public class Member {
 		return team;
 	}
 
-	public void setTeam(Team team) {
-		this.team = team;
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 }
