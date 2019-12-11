@@ -1,11 +1,14 @@
 package jpabook.jpashop.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Member extends BaseEntity {
@@ -19,6 +22,9 @@ public class Member extends BaseEntity {
 
 	@Embedded
 	private Address address;
+
+	@OneToMany(mappedBy = "member")
+	private List<Order> orders = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -42,6 +48,14 @@ public class Member extends BaseEntity {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 }

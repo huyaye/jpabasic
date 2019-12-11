@@ -29,6 +29,23 @@ public class OrderItem extends BaseEntity {
 
 	private Integer count;
 
+	public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+		OrderItem orderItem = new OrderItem();
+		orderItem.setItem(item);
+		orderItem.setOrderPrice(orderPrice);
+		orderItem.setCount(count);
+		item.removeStock(count);
+		return orderItem;
+	}
+
+	public void cancel() {
+		getItem().addStock(count); //�옱怨좎닔�웾�쓣 �썝蹂�.
+	}
+
+	public int getTotalPrice() {
+		return count * orderPrice;
+	}
+
 	public Long getId() {
 		return id;
 	}

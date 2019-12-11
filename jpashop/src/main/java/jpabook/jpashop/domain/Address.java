@@ -6,14 +6,17 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
-	@Column(length = 10)
+	@Column(length = 20)
 	private String city;
 
-	@Column(length = 20)
+	@Column(length = 40)
 	private String street;
 
-	@Column(length = 5)
+	@Column(length = 10)
 	private String zipcode;
+
+	public Address() {
+	}
 
 	public Address(String city, String street, String zipcode) {
 		super();

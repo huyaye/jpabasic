@@ -11,12 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import jpabook.jpashop.domain.exception.NotEnoughStockException;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 //@Inheritance(strategy = InheritanceType.JOINED)
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@DiscriminatorColumn
+@DiscriminatorColumn(name = "dtype")
 public abstract class Item extends BaseEntity {
 
 	@Id
@@ -32,6 +33,18 @@ public abstract class Item extends BaseEntity {
 
 	@ManyToMany(mappedBy = "items")
 	private List<Category> categories = new ArrayList<>();
+
+	public void addStock(int quantity) {
+		this.stockQuantity += quantity;
+	}
+
+	public void removeStock(int quantity) {
+		int restStock = this.stockQuantity - quantity;
+		if (restStock < 0) {
+			throw new NotEnoughStockException("need more stock");
+		}
+		this.stockQuantity = restStock;
+	}
 
 	public Long getId() {
 		return id;
