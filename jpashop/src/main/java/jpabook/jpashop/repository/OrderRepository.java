@@ -33,8 +33,8 @@ public class OrderRepository {
     public List<Order> findAll(OrderSearch orderSearch) {
 
         return em.createQuery("select o from Order o join o.member m" +
-                " where o.status = :status" +
-                " and m.name like :name", Order.class)
+				" where (:status is null or o.status = :status)" +
+				" and (:name is null or m.name like :name)", Order.class)
                 .setParameter("status", orderSearch.getOrderStatus())
                 .setParameter("name", orderSearch.getMemberName())
         .getResultList();

@@ -18,7 +18,7 @@ import jpabook.jpashop.domain.exception.NotEnoughStockException;
 //@Inheritance(strategy = InheritanceType.JOINED)
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name = "dtype")
-public abstract class Item extends BaseEntity {
+public abstract class Item {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
