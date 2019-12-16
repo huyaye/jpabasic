@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import jpabook.jpashop.api.dto.MemberAPIDto.CreateMemberRequest;
 import jpabook.jpashop.api.dto.MemberAPIDto.CreateMemberResponse;
 import jpabook.jpashop.api.dto.MemberAPIDto.MemberResponse;
-import jpabook.jpashop.api.dto.MemberAPIDto.Result;
 import jpabook.jpashop.api.dto.MemberAPIDto.UpdateMemberRequest;
 import jpabook.jpashop.api.dto.MemberAPIDto.UpdateMemberResponse;
+import jpabook.jpashop.api.dto.ResponseDto;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.service.MemberService;
 
@@ -78,14 +78,14 @@ public class MemberApiController {
 	}
 
 	/**
-	* 조회 V2: 응답 값으로 엔티티가 아닌 별도의 DTO를 반환한다.
-	*/
+	 * 조회 V2: 응답 값으로 엔티티가 아닌 별도의 DTO를 반환한다.
+	 */
 	@GetMapping("/api/v2/members")
-	public Result<List<MemberResponse>> membersV2() {
+	public ResponseDto<List<MemberResponse>> membersV2() {
 		List<Member> findMembers = memberService.findMembers();
 		//엔티티 -> DTO 변환
 		List<MemberResponse> collect = findMembers.stream().map(m -> new MemberResponse(m.getName())).collect(Collectors.toList());
-		return new Result<>(collect);
+		return new ResponseDto<>(collect);
 	}
 
 }

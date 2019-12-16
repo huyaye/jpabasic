@@ -3,17 +3,6 @@ package jpabook.jpashop.api.dto;
 import javax.validation.constraints.NotEmpty;
 
 public class MemberAPIDto {
-	public static class Result<T> {
-		private T data;
-
-		public Result(T data) {
-			this.data = data;
-		}
-
-		public T getData() {
-			return data;
-		}
-	}
 
 	public static class CreateMemberRequest {
 		@NotEmpty

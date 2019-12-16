@@ -2,9 +2,11 @@ package jpabook.jpashop.domain;
 
 public class OrderSearch {
 
-    OrderStatus orderStatus;
+	public static final OrderSearch EMPTY = new OrderSearch();
 
-    String memberName;
+	private OrderStatus orderStatus = null;
+
+	private String memberName = null;
 
 	public OrderStatus getOrderStatus() {
 		return orderStatus;
