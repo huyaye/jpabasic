@@ -65,6 +65,33 @@ public class OrderRepository {
 	    // @formatter:on
 	}
 
+	public List<Order> findAllWithItem(OrderSearch orderSearch) {
+		// @formatter:off
+		return em.createQuery("select distinct o from Order o" + 
+								" join fetch o.member m" + 
+								" join fetch o.delivery d" + 
+								" join fetch o.orderItems oi" + 
+								" join fetch oi.item i" +
+								" where (:status is null or o.status = :status) " +
+								" and (:name is null or m.name like :name)", Order.class)
+				.setParameter("status", orderSearch.getOrderStatus())
+                .setParameter("name", orderSearch.getMemberName())
+				.getResultList();
+	    // @formatter:on
+	}
+
+	public List<Order> findAllWithMemberDelivery_Paging(int offset, int limit) {
+		// @formatter:off
+		List<Order> orders = em.createQuery("select o from Order o " + 
+											"join fetch o.member m " + 
+											"join fetch o.delivery d", Order.class)
+								.setFirstResult(offset)
+								.setMaxResults(limit)
+								.getResultList();
+		return orders;
+	    // @formatter:on
+	}
+
 	public List<Order> findAllByCriteria(OrderSearch orderSearch) {
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery<Order> query = criteriaBuilder.createQuery(Order.class);

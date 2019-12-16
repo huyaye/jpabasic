@@ -6,11 +6,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
         show_sql: true // 시스템에서 보여주는 것
         format_sql: true
+        default_batch_fetch_size: 1000
 logging.level:
   org.hibernate.SQL: debug # 로그에서 보여주는 것
   org.hibernate.type: trace
